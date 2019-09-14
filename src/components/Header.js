@@ -10,7 +10,7 @@ const HeaderSC = styled.header`
 `;
 
 const LogoSC = styled.img`
-  height:12px;
+  height:20px;
   margin:2%;
 `;
 
