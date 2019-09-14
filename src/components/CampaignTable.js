@@ -24,6 +24,7 @@ export default class CampaignTable extends Component {
                         new Promise(resolve => {
                             setTimeout(() => {
                                 this.props.setError('');
+                                this.props.setCreated(false);
                                 resolve();
                                 const { isValidData, errorMessage } = validateData(newData);
                                 if (isValidData) {
@@ -33,6 +34,7 @@ export default class CampaignTable extends Component {
                                     campaignService.createCampaign(newData)
                                         .then(response => {
                                             console.log('Campaign created');
+                                            this.props.setCreated(true);
                                         })
                                         .catch((error) => {
                                             console.log(error);

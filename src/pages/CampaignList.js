@@ -25,11 +25,22 @@ const ErrorContainerSC = styled.div`
     font-size: 14px;
 `
 
+const CreatedContainerSC = styled.div`
+    background: #416d001a;
+    color: #416d00;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    height: 40px;
+    font-size: 14px;
+`
+
 class CampaignList extends Component {
     state = {
         isLoading: true,
         campaigns: [],
-        error:'',
+        error: '',
+        created: false
     }
 
     componentDidMount() {
@@ -51,6 +62,12 @@ class CampaignList extends Component {
         })
     }
 
+    setCreated = (boolean) => {
+        this.setState({
+            created: boolean,
+        })
+    }
+
     render() {
         return (
             <>
@@ -61,13 +78,19 @@ class CampaignList extends Component {
                     </LoadingContainerSC>
                     :
                     <>
-                        {this.state.error.length?
-                        <ErrorContainerSC>
-                            <i class="material-icons">warning</i>
-                            <p>{this.state.error}</p>
-                        </ErrorContainerSC>
-                        : null}
-                        <CampaignTable campaigns={this.state.campaigns} setError={this.setError}></CampaignTable>
+                        {this.state.error.length ?
+                            <ErrorContainerSC>
+                                <i class="material-icons">warning</i>
+                                <p>{this.state.error}</p>
+                            </ErrorContainerSC>
+                            : null}
+                        {this.state.created ?
+                            <CreatedContainerSC>
+                                <i class="material-icons">done</i>
+                                <p>Campaign successfully created!</p>
+                            </CreatedContainerSC>
+                            : null}
+                        <CampaignTable campaigns={this.state.campaigns} setError={this.setError} setCreated={this.setCreated}></CampaignTable>
                     </>
                 }
             </>
