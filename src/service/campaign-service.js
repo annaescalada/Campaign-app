@@ -13,8 +13,8 @@ class CampaignService {
       .then(({ data }) => data);
   }
 
-  createCampaign() {
-    return this.campaign.post('/campaigns/create')
+  createCampaign(newCampaign) {
+    return this.campaign.post('/campaigns/create', newCampaign)
       .then(({ data }) => data);
   }
 

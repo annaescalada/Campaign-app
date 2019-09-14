@@ -1,27 +1,15 @@
 import React, { Component } from 'react'
 import MaterialTable from 'material-table';
+import campaignService from '../service/campaign-service';
 
 export default class CampaignTable extends Component {
-    state= {
+    state = {
         columns: [
             { title: 'Name', field: 'name' },
-            { title: 'Surname', field: 'surname' },
-            { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
-            {
-                title: 'Birth Place',
-                field: 'birthCity',
-                lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
-            },
+            { title: 'Category', field: 'category', lookup: { travel: 'Travel', dating: 'Dating', lifestyle: 'Lifestyle', news: 'News' } },
+            { title: 'URL', field: 'url' },
         ],
-        data: [
-            { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-            {
-                name: 'Zerya Betül',
-                surname: 'Baran',
-                birthYear: 2017,
-                birthCity: 34,
-            },
-        ],
+        data: this.props.campaigns,
     }
 
     render() {
@@ -38,6 +26,13 @@ export default class CampaignTable extends Component {
                                 const data = [...this.state.data];
                                 data.push(newData);
                                 this.setState({ ...this.state, data });
+                                campaignService.createCampaign(newData)
+                                    .then(response => {
+                                        console.log('Campaign created');
+                                    })
+                                    .catch((error) => {
+                                        console.log(error);
+                                    })
                             }, 600);
                         }),
                     onRowDelete: oldData =>
@@ -47,6 +42,13 @@ export default class CampaignTable extends Component {
                                 const data = [...this.state.data];
                                 data.splice(data.indexOf(oldData), 1);
                                 this.setState({ ...this.state, data });
+                                campaignService.deleteCampaign(oldData.id)
+                                    .then(response => {
+                                        console.log('Campaign deleted');
+                                    })
+                                    .catch((error) => {
+                                        console.log(error);
+                                    })
                             }, 600);
                         }),
                 }}

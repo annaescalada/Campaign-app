@@ -29,13 +29,14 @@ class CampaignList extends Component {
     }
 
     render() {
+        console.log(this.state.campaigns)
         return (
             <CampaignContainerSC>
 
                 {this.state.isLoading?
                 CircularUnderLoad()
                 : 
-                <CampaignTable></CampaignTable>
+                <CampaignTable campaigns={this.state.campaigns}></CampaignTable>
             }
             </CampaignContainerSC>
         )
